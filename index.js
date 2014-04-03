@@ -63,6 +63,8 @@ function initEsIndexIfNeeded() {
 
     /**
      * Response from es is in body object from API
+     *
+     * Error existing in API version 1.0.3 (will be upgrading soon)
      */
     if (response.body === true) {
       return addMappingToEsIndexIfMissing();
@@ -143,6 +145,8 @@ function fillCache(sequenceName) {
         .then(function (response) {
           /**
            * Response from es is in body object from API
+           *
+           * Error existing in API version 1.0.3 (will be upgrading soon)
            */
           for ( var k = 0; k < response.body.items.length; k+=1 ) {
             // This is the core trick: The document's version is an auto-incrementing integer.
