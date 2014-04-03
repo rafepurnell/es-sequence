@@ -61,7 +61,10 @@ function initEsIndexIfNeeded() {
     index: _options.esIndex
   }).then(function (response) {
 
-    if (response === true) {
+    /**
+     * Response from es is in body object from API
+     */
+    if (response.body === true) {
       return addMappingToEsIndexIfMissing();
     }
 
@@ -138,9 +141,12 @@ function fillCache(sequenceName) {
     resolve(
       _client.bulk(bulkParams)
         .then(function (response) {
-          for ( var k = 0; k < response.items.length; k+=1 ) {
+          /**
+           * Response from es is in body object from API
+           */
+          for ( var k = 0; k < response.body.items.length; k+=1 ) {
             // This is the core trick: The document's version is an auto-incrementing integer.
-            _cache[sequenceName].push(response.items[k].index._version);
+            _cache[sequenceName].push(response.body.items[k].index._version);
           }
         })
     );
